@@ -1,9 +1,13 @@
 {
     "manifest_version": 2,
     "name": "Novus",
-    "description": "The ultimate new tab window for front end enthusiasts",
-    "version": "1",
+    "description": "The ultimate new tab window",
+    "version": "1.0",
     "author": "Roy Prigat",
+    "background": {
+        "scripts": ["background.js"],
+        "persistent": false
+    },
     "browser_action": {
         "default_icon": "novus.png",
         "default_title": "Novus New Tab"
@@ -11,5 +15,19 @@
     "chrome_url_overrides": {
         "newtab": "newtab.html"
     },
-    "permissions": ["activeTab"]
+    "options_page": "options.html",
+    "permissions": [
+        "activeTab",
+        "storage", 
+        "declarativeContent",
+        "geolocation",
+        "https://ajax.googleapis.com/",
+        "*://*.api.unsplash.com//*"
+    ],
+    "icons": {
+        "16": "novus.png",
+        "32": "novus.png",
+        "48": "novus.png",
+        "128": "novus.png"
+    }
 }
