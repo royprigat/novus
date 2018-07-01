@@ -23,6 +23,7 @@ html,body {
     background: white;
     opacity: 1;
     transition: opacity 0.5s ease-in-out;
+    z-index: 1;
 }
 
 #details {
@@ -30,13 +31,15 @@ html,body {
     top: 20px;
     left: 20px;
     padding: 10px;
-    background: rgba(255, 255, 255, 0.685);
+    background: rgba(0, 0, 0, 0.2);
     border-radius: 3px;
     text-align: left;
     color: white;
     font-size: 20px;
+    z-index: 0;
 }
 
 #w-icon {
-    width: 50px;
+    width: 40px;
+    margin: auto;
 }

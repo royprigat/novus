@@ -1,3 +1,4 @@
+import {weatherAPIKey, unsplashAPIKey, collectionUrl} from './apiKeys';
 
 chrome.runtime.onStartup.addListener(function () {
 

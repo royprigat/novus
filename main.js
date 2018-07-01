@@ -22,15 +22,27 @@
 // Get wallpaper and set it to background
 chrome.storage.sync.get('wallpaper', ({wallpaper}) => {
     document.body.style.backgroundImage = `url('${wallpaper}')`;
-    document.getElementById('container').style.opacity = 0;
-    document.getElementById('container').style.zIndex = -1;
+    let container = document.getElementById('container');
+    container.style.opacity = 0;
+    setTimeout(() => {
+        container.style.zIndex = -1;
+    }, 700);
 });
 
 // Get location and weather details
-chrome.storage.sync.get(['location', 'temprature', 'weather'], ({location, temprature, weather}) => {
-    document.getElementById('location').innerHTML = location;
+chrome.storage.sync.get(['temprature', 'weather'], ({temprature, weather}) => {
     document.getElementById('temp').innerHTML = Math.round(temprature) + "&#8451";
-    document.getElementById('w-icon').src = './img/sun.svg';
+    let w_icon = document.getElementById('w-icon');
+    if ( weather === 'Clear' ) {
+        w_icon.src = './img/sun.svg';
+    } else if( weather === 'Clouds' ) {
+        w_icon.src = './img/clouds.svg';
+    } else if( weather === 'Rain' ) {
+        w_icon.src = './img/rain.svg';
+    } else {
+        w_icon.src = './img/partial_clouds.svg';
+    }
+
     console.log(weather);
 });
 
