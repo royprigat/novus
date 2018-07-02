@@ -32,9 +32,8 @@ chrome.runtime.onInstalled.addListener(() => {
     }
 });
 
-chrome.runtime.onStartup.addListener(() => {
-    console.log("startup");
-    // Set random background
+chrome.browserAction.onClicked.addListener((tab) => {
+    // Set random background on action click, and open a new tab
     fetch(collectionUrl, {headers: {Authorization: `Client-ID ${unsplashAPIKey}`}})
         .then((response) => response.json())
         .then((data) => {
@@ -42,15 +41,9 @@ chrome.runtime.onStartup.addListener(() => {
                 wallpaper: `${data.urls.full}`,
                 photographer: `${data.user.name}`,
                 photo_location: `${data.location.name}`
-            }, function () {});
+            }, () => {chrome.tabs.create({url: 'newtab.html'});});
         })
         .catch((err) => {
             console.log(err);
         });
-})
-
-chrome.browserAction.onClicked.addListener(() => {
-    chrome.tabs.create({
-        url: 'newtab.html'
-    });
 });

@@ -1,8 +1,9 @@
 {
     "manifest_version": 2,
     "name": "Novus",
-    "description": "The ultimate new tab window",
-    "version": "1.0",
+    "short_name": "A New Tab UI for Chrome",
+    "description": "Novus is an awesome New Tab interface that uses HD images from unsplash.com.",
+    "version": "1.1",
     "author": "Roy Prigat",
     "background": {
         "scripts": ["background.js"],
