@@ -17,17 +17,24 @@
     },
     "options_page": "options.html",
     "permissions": [
-        "activeTab",
-        "storage", 
-        "declarativeContent",
+        "identity",
+        "storage",
+        "bookmarks", 
         "geolocation",
-        "https://ajax.googleapis.com/",
         "*://*.api.unsplash.com//*"
     ],
+    "oauth2": {
+        "client_id": "413690262998-i050041d7fqtak7ib0qiuua773hf4c83.apps.googleusercontent.com",
+        "scopes": [
+            "https://www.googleapis.com/auth/contacts.readonly",
+            "https://www.googleapis.com/auth/gmail.readonly"
+        ]
+    },
     "icons": {
         "16": "novus.png",
         "32": "novus.png",
         "48": "novus.png",
         "128": "novus.png"
-    }
+    },
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj5T82EC77f/o70qgfq0AwlZj1rrRRUZhwRQhYldSUWEVJQewaOAk0m7VvrE65QI2dHfJI0UJE8LovO7uOcYA/iiGYN0QZhDJTfbvsFhWhMgoSx7QKnYtD+0+KhHmglnkTX/M3tJCySl62c19JTB/ih6n+eFLIMKzvz0zFAA7c/EP/YQRzcpNsAwsEpBXrCU1Wy5KZT1ri0JaaFcrKBWFsuMNe0yULvLQArehNKCJ1WJMiESwnbwAY4WLOe7JzCXul5oHta+oYYEAGUNCH1zJobOcNXeLn/8HPB6tjpwazgeA60SoaX4JMuA7aQyM+j/z9P/7AlToSlx0Dlk/zBggDwIDAQAB"
 }

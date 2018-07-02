@@ -26,20 +26,76 @@ html,body {
     z-index: 1;
 }
 
-#details {
+#date {
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: 15px;
+    left: 15px;
     padding: 10px;
     background: rgba(0, 0, 0, 0.2);
     border-radius: 3px;
     text-align: left;
     color: white;
-    font-size: 20px;
+    font-size: 16px;
+    z-index: 0;
+}
+
+#weather {
+    position: absolute;
+    top: 60px;
+    left: 15px;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    text-align: center;
+    color: white;
+    font-size: 16px;
     z-index: 0;
 }
 
 #w-icon {
-    width: 40px;
-    margin: auto;
+    width: 35px;
+    margin-top: 5px;
+}
+
+#m-icon {
+    width: 26px;
+}
+
+#mail {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    text-align: center;
+    color: white;
+    font-size: 16px;
+    z-index: 0;
+}
+
+#notifs {
+    position: absolute;
+    right: -4px;
+    top: -5px;
+    min-width: 12px;
+    background: red;
+    border-radius: 50%;
+    font-size: 10px;
+    color: white;
+    text-align: center;
+}
+
+#credits {
+    position: absolute;
+    left: 15px;
+    bottom: 15px;
+    padding: 5px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    text-align: left;
+    color: white;
+    font-size: 14px;
+}
+
+#photo_loc {
+    font-size: 12px;
+    margin-top: 2px;
 }
