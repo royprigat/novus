@@ -7,7 +7,7 @@ html,body {
     height: 100vh;
     color: black;
     font-family: 'Roboto', sans-serif;
-    font-size: 30px;
+    font-size: 20px;
     font-weight: 100;
     text-align: center;
     background-position: center;
@@ -59,6 +59,12 @@ html,body {
 
 #m-icon {
     width: 26px;
+    opacity: 0.8;
+    transition: all 0.2s;
+}
+
+#m-icon:hover {
+    opacity: 1;
 }
 
 #mail {
@@ -81,6 +87,50 @@ html,body {
     font-size: 10px;
     color: white;
     text-align: center;
+    z-index: 2;
+}
+
+#bookmarks {
+    display: flex;
+    flex-wrap: wrap;
+    width: 600px;
+    margin: auto;
+    margin-top: 150px;
+    max-height: 100vh;
+}
+
+.bookmark {
+    margin: 10px;
+    padding: 10px;
+    width: 140px;
+    height: 30px;
+    background: rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    text-align: left;
+    font-size: 14px;
+    color: white;
+    overflow: hidden;
+    border-radius: 3px;
+    transition: all 0.2s;
+}
+
+.bookmark:hover {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.bookmark img {
+    width: 30px;
+    height: 30px;
+}
+
+.bookmark-content {
+    display: flex;
+    height: 100%;
+}
+
+.bookmark-title {
+    margin-left: 8px;
+    margin-top: 2px;
 }
 
 #credits {

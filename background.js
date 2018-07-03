@@ -4,10 +4,12 @@ chrome.runtime.onInstalled.addListener(() => {
     fetch(collectionUrl, {headers: {Authorization: `Client-ID ${unsplashAPIKey}`}})
         .then((response) => response.json())
         .then((data) => {
+            const init_date = new Date().toDateString();
             chrome.storage.sync.set({
                 wallpaper: `${data.urls.full}`,
                 photographer: `${data.user.name}`,
-                photo_location: `${data.location.name}`
+                photo_location: `${data.location.name}`,
+                init_date: `${init_date}`
             }, function () {});
         })
         .catch((err) => {
@@ -30,20 +32,11 @@ chrome.runtime.onInstalled.addListener(() => {
     } else {
         console.log('no geolocation');
     }
-});
 
-chrome.browserAction.onClicked.addListener((tab) => {
-    // Set random background on action click, and open a new tab
-    fetch(collectionUrl, {headers: {Authorization: `Client-ID ${unsplashAPIKey}`}})
-        .then((response) => response.json())
-        .then((data) => {
-            chrome.storage.sync.set({
-                wallpaper: `${data.urls.full}`,
-                photographer: `${data.user.name}`,
-                photo_location: `${data.location.name}`
-            }, () => {chrome.tabs.create({url: 'newtab.html'});});
-        })
-        .catch((err) => {
-            console.log(err);
-        });
+    // Set all current bookmarks
+    chrome.bookmarks.getTree((data) => {
+        chrome.storage.sync.set({
+            bookmarks: data[0].children
+        }, function () {});
+    });
 });
