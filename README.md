@@ -1,5 +1,6 @@
 ## Novus
 A Chrome extension that enhances bookmarks management.
+
 <br>
 Features:
 - Bookmarks displayed with associated icons.
