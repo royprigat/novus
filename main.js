@@ -1,7 +1,23 @@
+let unsplashAPIKey;
+let collectionUrl;
+let locked = true;
+
+// Get API Keys
+chrome.storage.sync.get(['unsplashAPIKey', 'collectionUrl'], ({
+    unsplashAPIKey,
+    collectionUrl
+}) => {
+    unsplashAPIKey = unsplashAPIKey;
+    collectionUrl = collectionUrl;
+});
 
 // Get wallpaper and set it to background
-function getNewBackground () {
-    chrome.storage.sync.get(['wallpaper', 'photographer', 'photo_location'], ({wallpaper, photographer, photo_location}) => {
+function getNewBackground() {
+    chrome.storage.sync.get(['wallpaper', 'photographer', 'photo_location'], ({
+        wallpaper,
+        photographer,
+        photo_location
+    }) => {
         document.body.style.backgroundImage = `url('${wallpaper}')`;
         let container = document.getElementById('container');
         container.style.opacity = 0;
@@ -15,14 +31,17 @@ function getNewBackground () {
 
 // Get location and weather details
 function getWeather() {
-    chrome.storage.sync.get(['temprature', 'weather'], ({temprature, weather}) => {
+    chrome.storage.sync.get(['temprature', 'weather'], ({
+        temprature,
+        weather
+    }) => {
         document.getElementById('temp').innerHTML = Math.round(temprature) + " &#8451";
         let w_icon = document.getElementById('w-icon');
-        if ( weather === 'Clear' ) {
+        if (weather === 'Clear') {
             w_icon.src = './img/sun.svg';
-        } else if( weather === 'Clouds' ) {
+        } else if (weather === 'Clouds') {
             w_icon.src = './img/clouds.svg';
-        } else if( weather === 'Rain' ) {
+        } else if (weather === 'Rain') {
             w_icon.src = './img/rain.svg';
         } else {
             w_icon.src = './img/partial_clouds.svg';
@@ -42,13 +61,19 @@ function getNewDate() {
 // Check if date changed and set new background if it did
 function checkNewDate() {
     const new_date = new Date().toDateString();
-    chrome.storage.sync.get('init_date', ({init_date}) => {
+    chrome.storage.sync.get('init_date', ({
+        init_date
+    }) => {
         new_date !== init_date ? setNewBackground() : null;
     });
 };
 
 function setNewBackground() {
-    fetch(collectionUrl, {headers: {Authorization: `Client-ID ${unsplashAPIKey}`}})
+    fetch(collectionUrl, {
+            headers: {
+                Authorization: `Client-ID ${unsplashAPIKey}`
+            }
+        })
         .then((response) => response.json())
         .then((data) => {
             chrome.storage.sync.set({
@@ -56,29 +81,53 @@ function setNewBackground() {
                 photographer: `${data.user.name}`,
                 photo_location: `${data.location.name}`,
                 init_date: new_date
-            }, () => {getNewBackground()});
+            }, () => {
+                getNewBackground()
+            });
         })
         .catch((err) => {
             console.log(err);
         });
 };
 
+function getFavicon(url) {
+    const re = /www\./;
+    const temp_name = url.replace(re, '');
+    const final_name = temp_name.slice(0, temp_name.indexOf('.'));
+    const svgs = ['facebook', 'github', 'google', 'invision', 'linkedin', 'twitter', 'youtube', 'spotify'];
+    if (svgs.includes(final_name)) {
+        return `./img/${final_name}.svg`;
+    };
+    return './img/placehold.svg';
+};
+
 function getAllBookmarks() {
-    chrome.storage.sync.get('bookmarks', ({bookmarks}) => {
+    chrome.storage.sync.get('bookmarks', ({
+        bookmarks
+    }) => {
         let bookmarksElement = document.getElementById('bookmarks');
         bookmarks[0].children.forEach((bookmark) => {
             const title = bookmark.title;
-            const url = bookmark.url;
-            const favicon = `https://icons.duckduckgo.com/ip2/${url.split('/')[2]}.ico`;
-            const bookmarkUI = document.createElement("a");
+            const url = bookmark.url.split('/')[2];
+            const favicon = getFavicon(url);
+            const bookmarkUI = document.createElement("div");
             bookmarkUI.classList.add("bookmark");
-            bookmarkUI.href = `${url}`;
-            bookmarkUI.innerHTML = `<div class="bookmark-content"><img src="${favicon}"/><div class="bookmark-title">${title}</div></div>`;
+            bookmarkUI.innerHTML = 
+            `<a class="bookmark-link" href=${bookmark.url}>
+                <div class="bookmark-content">
+                    <img src="${favicon}"/>
+                    <div class="bookmark-title">${title}</div>
+                </div>
+            </a>
+            <div class="actions">
+                <img src='./img/edit.svg' class="edit-btn">
+                <img src='./img/delete.svg' class="delete-btn">
+            </div>
+            `;
             bookmarksElement.appendChild(bookmarkUI);
         });
     });
 };
-
 
 getNewBackground();
 getWeather();
@@ -93,3 +142,41 @@ getAllBookmarks();
 //     const url = bookmark.url;
 //     alert(url);
 // });
+
+function lock(e) {
+    e.src = './img/lock-solid.svg';
+    e.style.width = '20px';
+    const bookmarks = document.querySelectorAll('.bookmark-link');
+    bookmarks.forEach((bookmark) => {
+        bookmark.classList.remove('disabled');
+    });
+    const action_buttons = document.querySelectorAll('.actions');
+    action_buttons.forEach((btn) => {
+        btn.style.opacity = '0';
+    });
+    locked = true;
+};
+
+function unlock(e) {
+    e.src = './img/lock-open-solid.svg';
+    e.style.width = '26px';
+    const bookmarks = document.querySelectorAll('.bookmark-link');
+    bookmarks.forEach((bookmark) => {
+        bookmark.classList.add('disabled');
+    });
+    const action_buttons = document.querySelectorAll('.actions');
+    action_buttons.forEach((btn) => {
+        btn.style.opacity = '1';
+    });
+    locked = false;
+};
+
+function toggleLock() {
+    locked ? unlock(this) : lock(this);
+};
+
+const lock_icon = document.getElementById('lock');
+lock_icon.addEventListener('click', toggleLock);
+
+const bookmarks = document.getElementById('bookmarks');
+bookmarks.addEventListener('click', console.log(this));

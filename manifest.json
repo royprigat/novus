@@ -3,7 +3,7 @@
     "name": "Novus",
     "short_name": "A New Tab UI for Chrome",
     "description": "Novus is an awesome New Tab interface that enhances bookmark management",
-    "version": "1.3",
+    "version": "1.6",
     "author": "Roy Prigat",
     "background": {
         "scripts": ["background.js"],
@@ -21,7 +21,8 @@
         "storage",
         "bookmarks", 
         "geolocation",
-        "*://*.api.unsplash.com//*"
+        "*://*.api.unsplash.com//*",
+        "https://fonts.googleapis.com/"
     ],
     "oauth2": {
         "client_id": "413690262998-i050041d7fqtak7ib0qiuua773hf4c83.apps.googleusercontent.com",

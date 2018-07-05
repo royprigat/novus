@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Lato');
-
-html,body {
+html,
+body {
     margin: 0;
     padding: 0;
     width: 100%;
     height: 100vh;
     color: black;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Ubuntu', sans-serif;
     font-size: 20px;
     font-weight: 100;
     text-align: center;
@@ -31,7 +31,7 @@ html,body {
     top: 15px;
     left: 15px;
     padding: 10px;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.3);
     border-radius: 3px;
     text-align: left;
     color: white;
@@ -44,12 +44,27 @@ html,body {
     top: 60px;
     left: 15px;
     padding: 10px;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.3);
     border-radius: 3px;
     text-align: center;
     color: white;
     font-size: 16px;
     z-index: 0;
+}
+
+#lock {
+    position: absolute;
+    right: 20px;
+    bottom: 15px;
+    width: 20px;
+    height: auto;
+    opacity: 0.8;
+    transition: all 0.2s;
+}
+
+#lock:hover {
+    opacity: 1;
+    cursor: pointer;
 }
 
 #w-icon {
@@ -58,7 +73,7 @@ html,body {
 }
 
 #m-icon {
-    width: 26px;
+    width: 22px;
     opacity: 0.8;
     transition: all 0.2s;
 }
@@ -79,11 +94,11 @@ html,body {
 
 #notifs {
     position: absolute;
-    right: -4px;
+    right: -5px;
     top: -5px;
     min-width: 12px;
     background: red;
-    border-radius: 50%;
+    border-radius: 40%;
     font-size: 10px;
     color: white;
     text-align: center;
@@ -93,34 +108,47 @@ html,body {
 #bookmarks {
     display: flex;
     flex-wrap: wrap;
-    width: 600px;
+    width: 750px;
     margin: auto;
+    justify-content: center;
     margin-top: 150px;
     max-height: 100vh;
 }
 
 .bookmark {
-    margin: 10px;
-    padding: 10px;
-    width: 140px;
-    height: 30px;
-    background: rgba(0, 0, 0, 0.2);
+    position: relative;
+    width: 156px;
+    height: 56px;
+    margin: 12px;
+}
+
+.bookmark-link {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    padding: 3px;
+    width: 150px;
+    height: 50px;
+    background: rgba(0, 0, 0, 0.3);
     text-decoration: none;
     text-align: left;
     font-size: 14px;
     color: white;
-    overflow: hidden;
-    border-radius: 3px;
+    border-radius: 5px;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
     transition: all 0.2s;
 }
 
-.bookmark:hover {
+.bookmark-link:hover {
     background: rgba(0, 0, 0, 0.5);
+    transform: scale(1.1);
 }
 
-.bookmark img {
-    width: 30px;
-    height: 30px;
+.bookmark-link.disabled {
+    pointer-events: none;
+    cursor: default;
+    transform: none;
 }
 
 .bookmark-content {
@@ -128,9 +156,53 @@ html,body {
     height: 100%;
 }
 
+.bookmark-content img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
 .bookmark-title {
     margin-left: 8px;
     margin-top: 2px;
+    width: 80px;
+    height: 45px;
+    overflow: hidden;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.actions {
+    opacity: 0;
+    transition: all 0.2s;
+}
+
+.delete-btn {
+    position: absolute;
+    top: -7px;
+    right: -5px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+}
+
+.delete-btn:hover {
+    cursor: pointer !important;
+    box-shadow: 0px 0px 2px 2px white;
+}
+
+.edit-btn {
+    position: absolute;
+    top: -7px;
+    right: 13px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+}
+
+.edit-btn:hover {
+    cursor: pointer !important;
+    box-shadow: 0px 0px 2px 2px white;
 }
 
 #credits {
@@ -138,7 +210,7 @@ html,body {
     left: 15px;
     bottom: 15px;
     padding: 5px;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.3);
     border-radius: 3px;
     text-align: left;
     color: white;

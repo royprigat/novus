@@ -1,7 +1,15 @@
 
 chrome.runtime.onInstalled.addListener(() => {
+    
+    // Store API Keys
+    chrome.storage.sync.set({
+        weatherAPIKey: weatherAPIKey,
+        unsplashAPIKey: unsplashAPIKey,
+        collectionURL: collectionURL,
+    }, function () {});
+    
     // Set random background
-    fetch(collectionUrl, {headers: {Authorization: `Client-ID ${unsplashAPIKey}`}})
+    fetch(collectionURL, {headers: {Authorization: `Client-ID ${unsplashAPIKey}`}})
         .then((response) => response.json())
         .then((data) => {
             const init_date = new Date().toDateString();
@@ -29,9 +37,7 @@ chrome.runtime.onInstalled.addListener(() => {
                     }, function () {});
                 });
         });
-    } else {
-        console.log('no geolocation');
-    }
+    } else {console.log('no geolocation');}
 
     // Set all current bookmarks
     chrome.bookmarks.getTree((data) => {
