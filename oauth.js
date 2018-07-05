@@ -1,6 +1,13 @@
-
+let googleAPIKey;
 
 window.onload = function() {
+
+    // Get API Keys
+    chrome.storage.sync.get(['googleAPIKey'], ({googleAPIKey}) => {
+      googleAPIKey = googleAPIKey;
+    });
+
+
     chrome.identity.getAuthToken({interactive: true}, function(token) {
         let init = {
           method: 'GET',

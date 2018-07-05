@@ -6,6 +6,7 @@ chrome.runtime.onInstalled.addListener(() => {
         weatherAPIKey: weatherAPIKey,
         unsplashAPIKey: unsplashAPIKey,
         collectionURL: collectionURL,
+        googleAPIKey: googleAPIKey
     }, function () {});
     
     // Set random background
