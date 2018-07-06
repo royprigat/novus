@@ -40,10 +40,4 @@ chrome.runtime.onInstalled.addListener(() => {
         });
     } else {console.log('no geolocation');}
 
-    // Set all current bookmarks
-    chrome.bookmarks.getTree((data) => {
-        chrome.storage.sync.set({
-            bookmarks: data[0].children
-        }, function () {});
-    });
 });

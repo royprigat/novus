@@ -18,7 +18,7 @@
         <div id="temp"></div>
         <img src="" alt="" id="w-icon">
     </div>
-        <img src="./img/lock-solid.svg" alt="" id="lock">
+    <img src="./img/lock-solid.svg" alt="" id="lock">
     <div id="mail">
         <div id="notifs"></div>
         <a href="https://www.google.com/gmail/">
@@ -33,6 +33,37 @@
     <div id="credits">
         <div id="photographer"></div>
         <div id="photo_loc"></div>
+    </div>
+
+    <div id="id01" class="modal">
+        <!-- Content -->
+        <form id="edit-form" class="modal-content animate">
+            <ul>
+                <li>
+                    <label for="title">
+                        <b>Title</b>
+                    </label>
+                    <input type="text" placeholder="New title" name="title">
+                </li>
+
+                <li>
+                    <label for="url">
+                        <b>URL</b>
+                    </label>
+                    <input type="text" placeholder="New URL" name="url">
+                </li>
+
+                <li>
+                    <label for="image-url">
+                        <b>Image Link</b>
+                    </label>
+                    <input type="text" placeholder="New image link" name="img-url" required>
+                </li>
+
+                <button type="button" class="cancelbtn">Cancel</button>
+                <input type="submit" value="Submit">
+            </ul>
+        </form>
     </div>
 
     <script type="text/javascript" src="main.js"></script>
