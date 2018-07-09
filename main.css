@@ -30,6 +30,11 @@ li {
     margin: 10px;
 }
 
+a {
+    text-decoration: none;
+    color: white;
+}
+
 #container {
     position: fixed;
     width: 100%;
@@ -230,6 +235,10 @@ li {
     text-align: left;
     color: white;
     font-size: 14px;
+}
+
+#credits a:hover {
+    opacity: 0.8;
 }
 
 #photo_loc {

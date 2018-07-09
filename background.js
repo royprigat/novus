@@ -1,6 +1,6 @@
 
 chrome.runtime.onInstalled.addListener(() => {
-    
+     
     // Store API Keys
     chrome.storage.sync.set({
         weatherAPIKey: weatherAPIKey,
@@ -17,7 +17,9 @@ chrome.runtime.onInstalled.addListener(() => {
             chrome.storage.sync.set({
                 wallpaper: `${data.urls.full}`,
                 photographer: `${data.user.name}`,
+                photographer_url: `${data.user.links.html}`,
                 photo_location: `${data.location.name}`,
+                photo_url: `${data.links.html}`,
                 init_date: `${init_date}`
             }, function () {});
         })

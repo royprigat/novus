@@ -1,13 +1,22 @@
+import { bookmarkElement } from './htmlVars.js';
+
 let unsplashAPIKey;
 let collectionUrl;
 let locked = true;
 let bookmarks_list;
 let curr_bookmark_edit;
 
+const storage = chrome.storage.sync;
+
 // Get API Keys
-chrome.storage.sync.get(['unsplashAPIKey', 'collectionUrl'], ({unsplashAPIKey,collectionUrl}) => {
+storage.get(['unsplashAPIKey', 'collectionUrl'], ({unsplashAPIKey,collectionUrl}) => {
     unsplashAPIKey = unsplashAPIKey;
     collectionUrl = collectionUrl;
+});
+
+chrome.bookmarks.onCreated.addListener((id, bookmark) => {
+    bookmarks_list.push(bookmark);
+    addBookmark(bookmark);
 });
 
 // Set all current bookmarks
@@ -22,10 +31,12 @@ populateBookmarks();
 
 // Get wallpaper and set it to background
 function getNewBackground() {
-    chrome.storage.sync.get(['wallpaper', 'photographer', 'photo_location'], ({
+    storage.get(['wallpaper', 'photographer', 'photographer_url', 'photo_location', 'photo_url'], ({
         wallpaper,
         photographer,
-        photo_location
+        photographer_url,
+        photo_location,
+        photo_url
     }) => {
         document.body.style.backgroundImage = `url('${wallpaper}')`;
         let container = document.getElementById('container');
@@ -33,14 +44,16 @@ function getNewBackground() {
         setTimeout(() => {
             container.style.zIndex = -1;
         }, 700);
-        document.getElementById('photographer').innerHTML = photographer;
-        photo_location != undefined ? (document.getElementById('photo_loc').innerHTML = photo_location) : null;
+        const artist = document.getElementById('photographer');
+        artist.innerHTML = `<a href=${photographer_url}>${photographer}</a>`;
+        console.log(photographer_url);
+        photo_location != undefined ? (document.getElementById('photo_loc').innerHTML = `<a href=${photo_url}>${photo_location}</a>`) : null;
     });
 };
 
 // Get location and weather details
 function getWeather() {
-    chrome.storage.sync.get(['temprature', 'weather'], ({
+    storage.get(['temprature', 'weather'], ({
         temprature,
         weather
     }) => {
@@ -70,7 +83,7 @@ function getNewDate() {
 // Check if date changed and set new background if it did
 function checkNewDate() {
     const new_date = new Date().toDateString();
-    chrome.storage.sync.get('init_date', ({
+    storage.get('init_date', ({
         init_date
     }) => {
         new_date !== init_date ? setNewBackground() : null;
@@ -85,7 +98,7 @@ function setNewBackground() {
         })
         .then((response) => response.json())
         .then((data) => {
-            chrome.storage.sync.set({
+            storage.set({
                 wallpaper: `${data.urls.full}`,
                 photographer: `${data.user.name}`,
                 photo_location: `${data.location.name}`,
@@ -99,38 +112,27 @@ function setNewBackground() {
         });
 };
 
-function getFavicon(url) {
-    const re = /www\./;
-    const temp_name = url.replace(re, '');
-    const final_name = temp_name.slice(0, temp_name.indexOf('.'));
-    const svgs = ['facebook', 'github', 'google', 'invision', 'linkedin', 'twitter', 'youtube', 'spotify'];
-    if (svgs.includes(final_name)) {
-        return `./img/${final_name}.svg`;
-    };
-    return './img/placehold.svg';
+function getFavicon(url, id) {
+    storage.get([id], (value) => {
+        if (value[id]) {
+            document.getElementById(id).querySelector('img').src = value[id];
+        };
+    });
+    const svgs = ['facebook', 'github', 'google', 'invision', 'linkedin', 'twitter', 'youtube', 'spotify', 'medium'];
+    const names = url.split('.');
+    const found = names.find((name) => {
+        return svgs.includes(name);
+    });
+    return (found ? `./img/${found}.svg` : './img/placehold.svg');
 };
 
 function addBookmark(bookmark) {
     let bookmarksElement = document.getElementById('bookmarks');
     const title = bookmark.title;
     const url = bookmark.url ? bookmark.url.split('/')[2] : null;
-    const favicon = url != null ? getFavicon(url) : './img/placehold.svg';
-    const bookmarkUI = document.createElement("div");
-    bookmarkUI.setAttribute('id', bookmark.id);
-    bookmarkUI.classList.add("bookmark");
-    bookmarkUI.innerHTML = 
-    `<a class="bookmark-link" href=${bookmark.url}>
-        <div class="bookmark-content">
-            <img src="${favicon}"/>
-            <div class="bookmark-title">${title}</div>
-        </div>
-    </a>
-    <div class="actions">
-        <img src='./img/edit.svg' class="edit-btn">
-        <img src='./img/delete.svg' class="delete-btn">
-    </div>
-    `;
-    bookmarksElement.appendChild(bookmarkUI);
+    const favicon = url != null ? getFavicon(url, bookmark.id) : './img/placehold.svg';
+    const bookmarkElem = bookmarkElement(bookmark.id, bookmark.url, favicon, title);
+    bookmarksElement.appendChild(bookmarkElem);
 };
 
 function getAllBookmarks() {
@@ -143,11 +145,6 @@ getNewBackground();
 getWeather();
 getNewDate();
 checkNewDate();
-
-chrome.bookmarks.onCreated.addListener((id, bookmark) => {
-    bookmarks_list.push(bookmark);
-    addBookmark(bookmark);
-});
 
 function lock(e) {
     e.src = './img/lock-solid.svg';
@@ -196,7 +193,6 @@ function handleEdit(target) {
     edit_modal.style.display = 'block';
     const edit_form = document.getElementById('edit-form');
     curr_bookmark_edit = target.parentElement.parentElement;
-    console.log(curr_bookmark_edit);
 };
 
 function handleChange(e) {
@@ -229,10 +225,13 @@ window.onclick = function(event) {
 
 function handleSubmit(e) {
     e.preventDefault();
+    const id = curr_bookmark_edit.id;
     const title = this.querySelector('input[name=title]').value;
-    const url = this.querySelector('input[name=url]').value;
     const img_url = this.querySelector('input[name=img-url]').value;
-    curr_bookmark_edit.querySelector('img').src = `${img_url}`;
+    title != '' ? curr_bookmark_edit.querySelector('.bookmark-title').innerHTML = title : null;
+    img_url != '' ? curr_bookmark_edit.querySelector('img').src = `${img_url}` : null;
+    if (title != '') {chrome.bookmarks.update(id, {title: `${title}`});};
+    storage.set({[id]: img_url});
     this.reset();
     hideForm();
 };
