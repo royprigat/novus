@@ -46,7 +46,6 @@ function getNewBackground() {
         }, 700);
         const artist = document.getElementById('photographer');
         artist.innerHTML = `<a href=${photographer_url}>${photographer}</a>`;
-        console.log(photographer_url);
         photo_location != undefined ? (document.getElementById('photo_loc').innerHTML = `<a href=${photo_url}>${photo_location}</a>`) : null;
     });
 };
@@ -130,7 +129,7 @@ function addBookmark(bookmark) {
     let bookmarksElement = document.getElementById('bookmarks');
     const title = bookmark.title;
     const url = bookmark.url ? bookmark.url.split('/')[2] : null;
-    const favicon = url != null ? getFavicon(url, bookmark.id) : './img/placehold.svg';
+    const favicon = url != null ? getFavicon(url, bookmark.id) : './img/folder-2.svg';
     const bookmarkElem = bookmarkElement(bookmark.id, bookmark.url, favicon, title);
     bookmarksElement.appendChild(bookmarkElem);
 };
