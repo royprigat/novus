@@ -118,8 +118,8 @@ a {
 #notifs {
     display: none;
     position: absolute;
-    right: -5px;
-    top: -5px;
+    right: 5px;
+    top: 4px;
     padding: 1px;
     background: red;
     min-width: 11px;
@@ -143,6 +143,7 @@ a {
     flex-wrap: wrap;
     width: 750px;
     margin: auto;
+    margin-top: 130px;
     justify-content: center;
     max-height: 100vh;
 }
@@ -250,7 +251,7 @@ a {
     border-radius: 3px;
     text-align: left;
     color: white;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 #credits a:hover {
@@ -258,7 +259,7 @@ a {
 }
 
 #photo_loc {
-    font-size: 12px;
+    font-size: 10px;
     margin-top: 2px;
 }
 

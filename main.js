@@ -43,7 +43,10 @@ function getNewBackground() {
             container.style.zIndex = -1;
         }, 700);
         const artist = document.getElementById('photographer');
-        artist.innerHTML = `<a href=${photographer_url}>${photographer}</a>`;
+        artist.innerHTML = `
+        <a href=${photographer_url}?utm_source=novus&utm_medium=referral>${photographer}</a>
+        on <a href="https://unsplash.com/?utm_source=novus&utm_medium=referral">Unsplash</a>
+        `;
         photo_location != undefined ? (document.getElementById('photo_loc').innerHTML = `<a href=${photo_url}>${photo_location}</a>`) : null;
     });
 };
