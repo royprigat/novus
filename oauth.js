@@ -39,7 +39,7 @@ window.onload = function() {
         .then((response) => response.json())
         .then((data) => {
                   let notifs = document.getElementById("notifs");
-                  data.resultSizeEstimate > 0 ? (notifs.innerHTML = data.resultSizeEstimate) : null;
+                  data.resultSizeEstimate > 0 ? (notifs.innerHTML = data.resultSizeEstimate) && (notifs.style.display = "block") : null;
         });
     });
-};
+};     

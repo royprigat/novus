@@ -27,8 +27,6 @@ function populateBookmarks() {
     });
 };
 
-populateBookmarks();
-
 // Get wallpaper and set it to background
 function getNewBackground() {
     storage.get(['wallpaper', 'photographer', 'photographer_url', 'photo_location', 'photo_url'], ({
@@ -52,10 +50,7 @@ function getNewBackground() {
 
 // Get location and weather details
 function getWeather() {
-    storage.get(['temprature', 'weather'], ({
-        temprature,
-        weather
-    }) => {
+    storage.get(['temprature', 'weather'], ({temprature,weather}) => {
         document.getElementById('temp').innerHTML = Math.round(temprature) + " &#8451";
         let w_icon = document.getElementById('w-icon');
         if (weather === 'Clear') {
@@ -82,14 +77,12 @@ function getNewDate() {
 // Check if date changed and set new background if it did
 function checkNewDate() {
     const new_date = new Date().toDateString();
-    storage.get('init_date', ({
-        init_date
-    }) => {
-        new_date !== init_date ? setNewBackground() : null;
+    storage.get('init_date', ({init_date}) => {
+        new_date !== init_date ? setNewBackground(new_date) : null;
     });
 };
 
-function setNewBackground() {
+function setNewBackground(new_date) {
     fetch(collectionUrl, {
             headers: {
                 Authorization: `Client-ID ${unsplashAPIKey}`
@@ -100,10 +93,12 @@ function setNewBackground() {
             storage.set({
                 wallpaper: `${data.urls.full}`,
                 photographer: `${data.user.name}`,
+                photographer_url: `${data.user.links.html}`,
                 photo_location: `${data.location.name}`,
+                photo_url: `${data.links.html}`,
                 init_date: new_date
             }, () => {
-                getNewBackground()
+                getNewBackground();
             });
         })
         .catch((err) => {
@@ -140,11 +135,6 @@ function getAllBookmarks() {
     });
 };
 
-getNewBackground();
-getWeather();
-getNewDate();
-checkNewDate();
-
 function lock(e) {
     e.src = './img/lock-solid.svg';
     e.style.width = '20px';
@@ -177,7 +167,7 @@ function toggleLock() {
     locked ? unlock(this) : lock(this);
 };
 
-const lock_icon = document.getElementById('lock');
+const lock_icon = document.getElementById('l-icon');
 lock_icon.addEventListener('click', toggleLock);
 
 function handleDelete(target) {
@@ -237,3 +227,24 @@ function handleSubmit(e) {
 
 const edit_form = document.getElementById('edit-form');
 edit_form.addEventListener('submit', handleSubmit);
+
+
+
+
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-112154592-3']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = 'https://ssl.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+
+
+
+populateBookmarks();
+getNewBackground();
+getWeather();
+getNewDate();
+checkNewDate();
