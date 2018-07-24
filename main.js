@@ -9,9 +9,9 @@ let curr_bookmark_edit;
 const storage = chrome.storage.sync;
 
 // Get API Keys
-storage.get(['unsplashAPIKey', 'collectionUrl'], ({unsplashAPIKey,collectionUrl}) => {
+storage.get(['unsplashAPIKey', 'collectionURL'], ({unsplashAPIKey,collectionURL}) => {
     unsplashAPIKey = unsplashAPIKey;
-    collectionUrl = collectionUrl;
+    collectionURL = collectionURL;
 });
 
 chrome.bookmarks.onCreated.addListener((id, bookmark) => {
@@ -230,8 +230,6 @@ function handleSubmit(e) {
 
 const edit_form = document.getElementById('edit-form');
 edit_form.addEventListener('submit', handleSubmit);
-
-
 
 
 var _gaq = _gaq || [];

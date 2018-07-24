@@ -3,7 +3,7 @@
     "name": "Novus",
     "short_name": "A New Tab UI for Chrome",
     "description": "Novus is an awesome New Tab interface that enhances bookmark management",
-    "version": "1.17",
+    "version": "1.20",
     "author": "Roy Prigat",
     "background": {
         "scripts": ["background.js"],
