@@ -1,5 +1,4 @@
 
-
 chrome.runtime.onInstalled.addListener(() => {
   // Store API Keys
   chrome.storage.sync.set(

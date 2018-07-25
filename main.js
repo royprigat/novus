@@ -1,7 +1,7 @@
 import { bookmarkElement } from './htmlVars.js';
 
 let unsplashAPIKey;
-let collectionUrl;
+let collectionURL;
 let locked = true;
 let bookmarks_list;
 let curr_bookmark_edit;
@@ -86,7 +86,7 @@ function checkNewDate() {
 };
 
 function setNewBackground(new_date) {
-    fetch(collectionUrl, {
+    fetch(collectionURL, {
             headers: {
                 Authorization: `Client-ID ${unsplashAPIKey}`
             }
